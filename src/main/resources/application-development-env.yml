@@ -2,6 +2,7 @@ spring:
   security:
     oauth2:
       authorizationserver:
+        issuer: 'http://authorization-server:8081'
         client:
           algashop-test-client:
             registration:
