@@ -1,0 +1,26 @@
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          algashop-test-client:
+            registration:
+              client-id: algashop-test
+              authorization-grant-types:
+                - client_credentials
+              client-authentication-methods:
+                - client_secret_basic
+              client-secret: "{noop}test123"
+              scopes:
+                - products:read
+                - products:write
+          algashop-ordering-service-client:
+            registration:
+              client-id: algashop-ordering-service
+              authorization-grant-types:
+                - client_credentials
+              client-authentication-methods:
+                - client_secret_basic
+              client-secret: "{noop}secret123"
+              scopes:
+                - products:read
