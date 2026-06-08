@@ -15,6 +15,9 @@ spring:
               scopes:
                 - products:read
                 - products:write
+                - products:stock:write
+                - categories:read
+                - categories:write
             token:
               access-token-time-to-live: 15m
               access-token-format: self-contained #reference
