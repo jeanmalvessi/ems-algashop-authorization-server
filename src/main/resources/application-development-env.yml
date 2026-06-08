@@ -16,6 +16,7 @@ spring:
                 - products:write
             token:
               access-token-time-to-live: 15m
+              access-token-format: reference
           algashop-ordering-service-client:
             registration:
               client-id: algashop-ordering-service
@@ -26,3 +27,6 @@ spring:
               client-secret: "{noop}secret123"
               scopes:
                 - products:read
+            token:
+              access-token-time-to-live: 15m
+              access-token-format: self-contained
