@@ -18,6 +18,10 @@ spring:
                 - products:stock:write
                 - categories:read
                 - categories:write
+                - invoices:read
+                - invoices:write
+                - credit-cards:read
+                - credit-cards:write
             token:
               access-token-time-to-live: 15m
               access-token-format: self-contained #reference
