@@ -1,5 +1,8 @@
 spring:
   security:
+    user:
+      name: customer@gmail.com
+      password: 123456
     oauth2:
       authorizationserver:
         issuer: 'http://authorization-server:8081'
@@ -45,3 +48,42 @@ spring:
             token:
               access-token-time-to-live: 15m
               access-token-format: self-contained
+          algashop-ecommerce-web-client:
+            registration:
+              client-id: algashop-ecommerce-web
+              client-secret: "{noop}ecommerce123"
+              client-name: AlgaShop Ecommerce
+              authorization-grant-types:
+                - authorization_code
+              client-authentication-methods:
+                - client_secret_basic
+              redirect-uris:
+                - http://algashop-ecommerce:9080/login/oauth2/code/algashop-ecommerce-web
+              scopes:
+                - credit-cards:read
+                - credit-cards:write
+                - orders:read
+                - orders:write
+                - customers:read
+                - customers:write
+                - shopping-carts:read
+                - shopping-carts:write
+            require-authorization-consent: true
+            require-proof-key: false #PKCE
+            token:
+              access-token-time-to-live: 5m
+              authorization-code-time-to-live: 10m
+          algashop-ecommerce-m2m-client:
+            registration:
+              client-id: algashop-ecommerce-m2m
+              authorization-grant-types:
+                - client_credentials
+              client-authentication-methods:
+                - client_secret_basic
+              client-secret: "{noop}m2m123"
+              scopes:
+                - products:read
+                - categories:read
+                - customers:write
+            token:
+              access-token-time-to-live: 15m
