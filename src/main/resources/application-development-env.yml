@@ -79,6 +79,7 @@ spring:
                 - customers:write
                 - shopping-carts:read
                 - shopping-carts:write
+                - openid
             require-authorization-consent: true
             require-proof-key: false #PKCE
             token:
