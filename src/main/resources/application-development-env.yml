@@ -1,4 +1,16 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/authorization_server
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration,classpath:db/testdata
+    user: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/authorization_server
   security:
     user:
       name: customer@gmail.com
