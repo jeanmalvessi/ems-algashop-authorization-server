@@ -12,9 +12,6 @@ spring:
     password: postgres
     url: jdbc:postgresql://localhost:5432/authorization_server
   security:
-    user:
-      name: customer@gmail.com
-      password: 123456
     oauth2:
       authorizationserver:
         issuer: 'http://authorization-server:8081'
