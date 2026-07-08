@@ -22,10 +22,11 @@ public class OAuth2TokenCustomizerConfig {
         return context -> {
             String tokenType = context.getTokenType().getValue();
             AuthorizationGrantType authorizationGrantType = context.getAuthorizationGrantType();
-            OidcUserInfo oidcUserInfo = loadUser(context);
             if (isIdToken(tokenType)) {
+                OidcUserInfo oidcUserInfo = loadUser(context);
                 context.getClaims().claims(claims -> claims.putAll(oidcUserInfo.getClaims()));
             } else if (isAccessToken(tokenType) && (isAuthCodeFlow(authorizationGrantType) || isRefreshTokenFlow(authorizationGrantType))) {
+                OidcUserInfo oidcUserInfo = loadUser(context);
                 context.getClaims().subject(oidcUserInfo.getSubject());
             }
         };
