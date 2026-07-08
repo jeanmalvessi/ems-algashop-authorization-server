@@ -1,4 +1,4 @@
-package com.algaworks.algashop.authorizationserver.infrastructure.security;
+package com.algaworks.algashop.authorizationserver.infrastructure.security.oidc;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;

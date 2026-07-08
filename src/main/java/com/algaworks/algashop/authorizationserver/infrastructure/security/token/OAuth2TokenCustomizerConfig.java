@@ -1,5 +1,6 @@
-package com.algaworks.algashop.authorizationserver.infrastructure.security;
+package com.algaworks.algashop.authorizationserver.infrastructure.security.token;
 
+import com.algaworks.algashop.authorizationserver.infrastructure.security.oidc.OidcUserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 @RequiredArgsConstructor
 public class OAuth2TokenCustomizerConfig {
 
-    private final OIDCUserInfoService oidcUserInfoService;
+    private final OidcUserInfoService oidcUserInfoService;
 
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {

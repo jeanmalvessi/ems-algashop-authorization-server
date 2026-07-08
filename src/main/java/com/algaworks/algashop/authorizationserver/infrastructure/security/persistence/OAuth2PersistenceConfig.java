@@ -1,4 +1,4 @@
-package com.algaworks.algashop.authorizationserver.infrastructure.security;
+package com.algaworks.algashop.authorizationserver.infrastructure.security.persistence;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

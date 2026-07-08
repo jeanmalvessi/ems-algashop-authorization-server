@@ -1,4 +1,4 @@
-package com.algaworks.algashop.authorizationserver.infrastructure.security;
+package com.algaworks.algashop.authorizationserver.infrastructure.security.oidc;
 
 import com.algaworks.algashop.authorizationserver.domain.model.AuthUser;
 import com.algaworks.algashop.authorizationserver.domain.model.AuthUserRepository;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class OIDCUserInfoService {
+public class OidcUserInfoService {
 
     private final AuthUserRepository authUserRepository;
 

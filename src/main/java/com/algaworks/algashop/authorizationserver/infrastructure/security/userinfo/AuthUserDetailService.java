@@ -1,4 +1,4 @@
-package com.algaworks.algashop.authorizationserver.infrastructure.security;
+package com.algaworks.algashop.authorizationserver.infrastructure.security.userinfo;
 
 import com.algaworks.algashop.authorizationserver.domain.model.AuthUser;
 import com.algaworks.algashop.authorizationserver.domain.model.AuthUserRepository;
