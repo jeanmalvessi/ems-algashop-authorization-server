@@ -31,12 +31,23 @@ public class OAuth2SecurityCheckApplicationServiceImpl implements SecurityCheckA
 
     @Override
     public boolean isAuthenticated() {
-        return getAuthentication().isAuthenticated();
+        try {
+            return getAuthentication().isAuthenticated();
+        } catch (IllegalStateException e) {
+            log.debug(e.getMessage(), e);
+            return false;
+        }
     }
 
     @Override
     public boolean isMachineAuthenticated() {
-        Jwt jwt = getJwt();
+        Jwt jwt;
+        try {
+            jwt = getJwt();
+        } catch (IllegalStateException e) {
+            log.debug(e.getMessage(), e);
+            return false;
+        }
         return jwt.getAudience().contains(jwt.getSubject());
     }
 
