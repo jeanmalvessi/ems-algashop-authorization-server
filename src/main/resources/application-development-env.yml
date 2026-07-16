@@ -44,6 +44,8 @@ spring:
                 - shopping-carts:read
                 - shopping-carts:write
                 - shipping-costs:preview
+                - users:read
+                - users:write
             token:
               access-token-time-to-live: 15m
               access-token-format: self-contained #reference
