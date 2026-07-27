@@ -32,6 +32,7 @@ public class AuthorizationServerSecurityConfig {
         var authorizationServer = new OAuth2AuthorizationServerConfigurer();
 
         http.securityMatcher(authorizationServer.getEndpointsMatcher())
+                .cors(Customizer.withDefaults())
                 .with(authorizationServer, configurer ->
                         configurer.oidc(oidc -> oidc
                                 .logoutEndpoint(logout -> logout.logoutResponseHandler(oidcLogoutAuthenticationSuccessHandler))
@@ -55,7 +56,7 @@ public class AuthorizationServerSecurityConfig {
                         .requestMatchers("/actuator/health/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
+                .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
