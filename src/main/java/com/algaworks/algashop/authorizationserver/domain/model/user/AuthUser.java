@@ -43,6 +43,12 @@ public class AuthUser extends AbstractAuditableAggregateRoot<AuthUser> {
         return user;
     }
 
+    public void anonymize() {
+        this.setName("Anonymized User");
+        this.setEmail("anonymized-" + this.id + "@deleted.local");
+        this.setEnabled(false);
+    }
+
     public void setPassword(String password) {
         if (StringUtils.isBlank(password)) {
             throw new IllegalArgumentException();
