@@ -1,6 +1,7 @@
 package com.algaworks.algashop.authorizationserver.infrastructure.security;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -23,10 +24,35 @@ public class AlgaShopSecurityProperties {
     @Valid
     private CorsProperties cors;
 
+    @NotNull
+    @Valid
+    private CookieProperties cookie;
+
+    @NotNull
+    @Valid
+    private CspProperties csp;
+
     @Data
     @NoArgsConstructor
     public static class CorsProperties {
         @NotEmpty
         private List<String> allowedOrigins = new ArrayList<>();
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class CookieProperties {
+        @NotBlank
+        private String sameSite;
+        @NotBlank
+        private String domainName;
+        @NotNull
+        private Boolean secure;
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class CspProperties {
+        private String policyDirectives;
     }
 }

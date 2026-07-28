@@ -19,6 +19,7 @@ public class CorsConfig {
         cors.setAllowedOrigins(properties.getCors().getAllowedOrigins());
         cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cors.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        cors.setAllowCredentials(true);
 
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cors);
