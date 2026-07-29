@@ -1,5 +1,6 @@
 package com.algaworks.algashop.authorizationserver.application.user.management;
 
+import com.algaworks.algashop.authorizationserver.application.security.SecurityCheckApplicationService;
 import com.algaworks.algashop.authorizationserver.application.user.query.AuthUserNotFoundException;
 import com.algaworks.algashop.authorizationserver.application.user.query.AuthUserOutput;
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUser;
@@ -7,6 +8,7 @@ import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUserRepo
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,12 @@ public class AuthUserManagementApplicationService {
 
     private final AuthUserRepository authUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SecurityCheckApplicationService securityCheck;
 
     public AuthUserOutput create(AuthUserInput input) {
+        if (!securityCheck.canRegisterUserOfType(input.getType())) {
+            throw new AccessDeniedException("Cannot register user of type " + input.getType());
+        }
 
         if (authUserRepository.existsByEmail(input.getEmail())) {
             throw new AuthUserEmailAlreadyInUseException(input.getEmail());

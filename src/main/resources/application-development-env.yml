@@ -119,6 +119,7 @@ spring:
               redirect-uris:
                 - http://admin.algashop.local:4200
                 - http://admin.algashop.local:4200/silent-refresh.html
+                - https://oauth.pstmn.io/v1/callback
               post-logout-redirect-uris:
                 - http://admin.algashop.local:4200
               scopes:
