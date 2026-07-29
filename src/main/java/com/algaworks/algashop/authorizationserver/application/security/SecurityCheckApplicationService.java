@@ -10,4 +10,6 @@ public interface SecurityCheckApplicationService {
     boolean isMachineAuthenticated();
     boolean canAccessOwnProfile();
     boolean canRegisterUserOfType(AuthUserType authUserType);
+    boolean canEditUser(AuthUserType editType, UUID editUserId);
+    boolean canChangeUserType(AuthUserType currentType, AuthUserType newType);
 }
