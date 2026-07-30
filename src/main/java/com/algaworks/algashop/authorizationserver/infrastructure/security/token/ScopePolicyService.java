@@ -5,6 +5,7 @@ import com.algaworks.algashop.authorizationserver.infrastructure.security.query.
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,10 +16,13 @@ public class ScopePolicyService {
     private final AuthUserClientScopesQueryService scopesQueryService;
 
     public Set<String> resolveScopes(AuthUserType role, String clientId, Set<String> authorizedScopes) {
-        Set<String> allowedScopes = scopesQueryService.findAllowedScopesByRoleAndClientId(role, clientId);
-
         if (authorizedScopes.isEmpty()) {
-            return authorizedScopes;
+            return new HashSet<>();
+        }
+
+        Set<String> allowedScopes = scopesQueryService.findAllowedScopesByRoleAndClientId(role, clientId);
+        if (allowedScopes.isEmpty()) {
+            return new HashSet<>(authorizedScopes);
         }
 
         return authorizedScopes.stream()

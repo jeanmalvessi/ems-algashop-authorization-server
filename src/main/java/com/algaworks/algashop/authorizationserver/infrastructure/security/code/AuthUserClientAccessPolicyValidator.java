@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -46,6 +47,13 @@ public class AuthUserClientAccessPolicyValidator implements Consumer<OAuth2Autho
             var codeRequest = buildCodeRequest(authentication, principal);
             throw new OAuth2AuthorizationCodeRequestAuthenticationException(error, codeRequest);
         }
+
+        Set<String> unauthorizedScopes = getUnauthorizedScopes(authentication, authUser.getType());
+        if (!unauthorizedScopes.isEmpty()) {
+            OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.INVALID_SCOPE, "The authenticated user type is not allowed to use this scopes: " + unauthorizedScopes, null);
+            var codeRequest = buildCodeRequest(authentication, principal);
+            throw new OAuth2AuthorizationCodeRequestAuthenticationException(error, codeRequest);
+        }
     }
 
     private OAuth2AuthorizationCodeRequestAuthenticationToken buildCodeRequest(OAuth2AuthorizationCodeRequestAuthenticationToken authentication, Authentication principal) {
@@ -65,5 +73,13 @@ public class AuthUserClientAccessPolicyValidator implements Consumer<OAuth2Autho
     private boolean canUseClient(AuthUserType type, String clientId) {
         Set<String> allowedClients = clientAllowedQueryService.findByRole(type);
         return allowedClients.contains(clientId);
+    }
+
+    private Set<String> getUnauthorizedScopes(OAuth2AuthorizationCodeRequestAuthenticationToken authentication, AuthUserType type) {
+        Set<String> originalScopes = authentication.getScopes();
+        Set<String> filteredScopes = scopePolicyService.resolveScopes(type, authentication.getClientId(), originalScopes);
+        HashSet<String> result = new HashSet<>(originalScopes);
+        result.removeAll(filteredScopes);
+        return result;
     }
 }
