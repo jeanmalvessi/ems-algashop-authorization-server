@@ -1,5 +1,6 @@
 package com.algaworks.algashop.authorizationserver.infrastructure.security.token;
 
+import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUserType;
 import com.algaworks.algashop.authorizationserver.infrastructure.security.oidc.OidcUserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -10,11 +11,14 @@ import org.springframework.security.oauth2.server.authorization.token.JwtEncodin
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 @RequiredArgsConstructor
 public class JwtTokenCustomizer implements OAuth2TokenCustomizer<JwtEncodingContext> {
 
     private final OidcUserInfoService oidcUserInfoService;
+    private final ScopePolicyService scopePolicyService;
 
     @Override
     public void customize(JwtEncodingContext context) {
@@ -34,8 +38,16 @@ public class JwtTokenCustomizer implements OAuth2TokenCustomizer<JwtEncodingCont
 
     private void customizeAccessToken(JwtEncodingContext context) {
         OidcUserInfo oidcUserInfo = loadUser(context);
+
+        Set<String> filteredScopes = scopePolicyService.resolveScopes(
+                AuthUserType.valueOf(oidcUserInfo.getClaimAsString("type")),
+                context.getRegisteredClient().getClientId(),
+                context.getAuthorizedScopes()
+        );
+
         context.getClaims().subject(oidcUserInfo.getSubject());
         context.getClaims().claim("role", oidcUserInfo.getClaimAsString("type"));
+        context.getClaims().claims(claim -> claim.put("scope", filteredScopes));
     }
 
     private OidcUserInfo loadUser(JwtEncodingContext context) {
