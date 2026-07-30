@@ -7,7 +7,10 @@ DELETE FROM spring_session_attributes;
 DELETE FROM spring_session;
 
 INSERT INTO auth_user (id, email, password, name, version, "type", enabled, created_at, last_modified_date)
-VALUES('019d7764-3b02-7fd5-b0e7-c47c58592857', 'john.doe@email.com', '{noop}123456', 'John Doe', 0, 'CUSTOMER', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES('6e148bd5-47f6-4022-b9da-07cfaa294f7a', 'john.doe@email.com', '{noop}123456', 'John Doe', 0, 'CUSTOMER', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO auth_user (id, email, password, name, version, "type", enabled, created_at, last_modified_date)
+VALUES('f6a7b8c9-d0e1-f2a3-b4c5-d6e7f8a9b0c1', 'sophia.anderson@email.com', '{noop}123456', 'Sophia Anderson', 0, 'CUSTOMER', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO auth_user (id, email, password, name, version, "type", enabled, created_at, last_modified_date)
 VALUES('019d7764-3b02-7be2-9112-039fda30e965', 'victoria.garcia@algashop.com', '{noop}123456', 'Victoria Garcia', 0, 'MANAGER', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
