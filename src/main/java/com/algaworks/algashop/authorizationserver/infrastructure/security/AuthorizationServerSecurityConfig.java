@@ -48,8 +48,9 @@ public class AuthorizationServerSecurityConfig {
                         .oidc(oidc -> oidc
                             .logoutEndpoint(logout -> logout.logoutResponseHandler(oidcLogoutAuthenticationSuccessHandler))
                             .userInfoEndpoint(userInfo -> userInfo.userInfoMapper(oidcUserInfoMapper)))
-                        .authorizationEndpoint(endpoint ->
-                                endpoint.authenticationProviders(this::customizeAuthenticationProviders)))
+                        .authorizationEndpoint(endpoint -> endpoint
+                                .authenticationProviders(this::customizeAuthenticationProviders)
+                                .consentPage("/oauth2/consent")))
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .exceptionHandling(
                         exceptions -> exceptions.defaultAuthenticationEntryPointFor(
