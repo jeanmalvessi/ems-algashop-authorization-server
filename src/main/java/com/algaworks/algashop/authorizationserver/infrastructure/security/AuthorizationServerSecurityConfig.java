@@ -83,7 +83,10 @@ public class AuthorizationServerSecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/login", "/forgot-password", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
                         .anyRequest().authenticated())
-                .formLogin(c -> c.loginPage("/login").permitAll());
+                .formLogin(c -> c
+                        .loginPage("/login")
+                        .defaultSuccessUrl(algaShopSecurityProperties.getDefaultRedirectUri())
+                        .permitAll());
 
         return http.build();
     }

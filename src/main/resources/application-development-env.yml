@@ -142,6 +142,7 @@ spring:
               authorization-code-time-to-live: 2m
 algashop:
   security:
+    defaultRedirectUri: http://algashop.local:9080
     cors:
       allowedOrigins:
         - http://admin.algashop.local:4200
