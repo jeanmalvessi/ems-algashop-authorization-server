@@ -79,8 +79,10 @@ public class AuthorizationServerSecurityConfig {
     @Bean
     @Order(3)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) {
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults());
+        http.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login", "/forgot-password", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(c -> c.loginPage("/login").permitAll());
 
         return http.build();
     }
