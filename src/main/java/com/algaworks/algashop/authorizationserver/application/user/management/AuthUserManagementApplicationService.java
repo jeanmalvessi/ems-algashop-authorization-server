@@ -1,6 +1,6 @@
 package com.algaworks.algashop.authorizationserver.application.user.management;
 
-import com.algaworks.algashop.authorizationserver.application.security.SecurityCheckApplicationService;
+import com.algaworks.algashop.authorizationserver.application.security.SecurityChecks;
 import com.algaworks.algashop.authorizationserver.application.user.query.AuthUserNotFoundException;
 import com.algaworks.algashop.authorizationserver.application.user.query.AuthUserOutput;
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUser;
@@ -21,7 +21,7 @@ public class AuthUserManagementApplicationService {
 
     private final AuthUserRepository authUserRepository;
     private final PasswordEncoder passwordEncoder;
-    private final SecurityCheckApplicationService securityCheck;
+    private final SecurityChecks securityCheck;
 
     public AuthUserOutput create(AuthUserInput input) {
         if (!securityCheck.canRegisterUserOfType(input.getType())) {

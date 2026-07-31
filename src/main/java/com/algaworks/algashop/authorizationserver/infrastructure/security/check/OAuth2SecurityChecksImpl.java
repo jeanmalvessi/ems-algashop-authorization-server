@@ -1,6 +1,6 @@
 package com.algaworks.algashop.authorizationserver.infrastructure.security.check;
 
-import com.algaworks.algashop.authorizationserver.application.security.SecurityCheckApplicationService;
+import com.algaworks.algashop.authorizationserver.application.security.SecurityChecks;
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUserType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.UUID;
 
-@Service("securityCheck")
+@Service("securityChecks")
 @Slf4j
-public class OAuth2SecurityCheckApplicationServiceImpl implements SecurityCheckApplicationService {
+public class OAuth2SecurityChecksImpl implements SecurityChecks {
 
     private static final String SCOPE_USERS_WRITE = "SCOPE_users:write";
     private static final String ROLE_MANAGER = "ROLE_" + AuthUserType.MANAGER.name();
