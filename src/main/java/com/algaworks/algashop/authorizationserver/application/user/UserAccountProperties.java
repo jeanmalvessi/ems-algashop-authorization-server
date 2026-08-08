@@ -1,6 +1,7 @@
 package com.algaworks.algashop.authorizationserver.application.user;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,10 @@ public class UserAccountProperties {
     @Valid
     private PasswordToken token;
 
+    @NotNull
+    @Valid
+    private Mail mail;
+
     @Data
     @NoArgsConstructor
     public static class PasswordToken {
@@ -28,5 +33,14 @@ public class UserAccountProperties {
         private Duration activationTtl;
         @NotNull
         private Duration passwordResetTtl;
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class Mail {
+        @NotBlank
+        private String passwordChangeUrl;
+        @NotBlank
+        private String from;
     }
 }

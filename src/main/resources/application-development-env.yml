@@ -1,4 +1,7 @@
 spring:
+  mail:
+    host: localhost
+    port: 1025
   session:
     store-type: JDBC
     timeout: 30m
@@ -145,6 +148,9 @@ algashop:
     token:
       activation-ttl: PT24H
       password-reset-ttl: PT2H
+    mail:
+      from: AlgaShop <no-reply@algashop.com>
+      password-change-url: http://auth.algashop.local:8081/change-password
   security:
     defaultRedirectUri: http://algashop.local:9080
     cors:

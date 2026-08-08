@@ -1,6 +1,7 @@
 package com.algaworks.algashop.authorizationserver.application.user.management;
 
 import com.algaworks.algashop.authorizationserver.application.user.UserAccountProperties;
+import com.algaworks.algashop.authorizationserver.application.user.mail.AuthUserMailSender;
 import com.algaworks.algashop.authorizationserver.application.user.query.AuthUserNotFoundException;
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUser;
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUserPasswordManager;
@@ -22,6 +23,7 @@ public class PasswordManagementApplicationService {
     private final UserAccountProperties userAccountProperties;
     private final AuthUserPasswordManager passwordManager;
     private final VerificationTokenHasher tokenHasher;
+    private final AuthUserMailSender authUserMailSender;
 
     public void changePasswordWithToken(String plainToken, String newPlainPassword) {
         String hash = tokenHasher.hash(plainToken);
@@ -40,11 +42,19 @@ public class PasswordManagementApplicationService {
     public void requestPasswordChange(UUID userId) {
         AuthUser authUser = authUserRepository.findById(userId)
                 .orElseThrow(() -> new AuthUserNotFoundException(userId));
+        requestPasswordChange(authUser);
+    }
 
-        String plainToken = authUser.generateVerificationToken(
-                userAccountProperties.getToken().getPasswordResetTtl(), tokenHasher);
+    public void requestPasswordChange(String email) {
+        AuthUser authUser = authUserRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthUserNotFoundException(email));
+        requestPasswordChange(authUser);
+    }
 
-        System.out.println("Plain token: " + plainToken);
+    private void requestPasswordChange(AuthUser authUser) {
+        String plainToken = authUser.generateVerificationToken(userAccountProperties.getToken().getPasswordResetTtl(), tokenHasher);
+
+        authUserMailSender.sendPasswordChangeEmail(authUser, plainToken);
 
         authUserRepository.save(authUser);
     }

@@ -2,6 +2,7 @@ package com.algaworks.algashop.authorizationserver.application.user.management;
 
 import com.algaworks.algashop.authorizationserver.application.security.SecurityChecks;
 import com.algaworks.algashop.authorizationserver.application.user.UserAccountProperties;
+import com.algaworks.algashop.authorizationserver.application.user.mail.AuthUserMailSender;
 import com.algaworks.algashop.authorizationserver.application.user.query.AuthUserNotFoundException;
 import com.algaworks.algashop.authorizationserver.application.user.query.AuthUserOutput;
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUser;
@@ -10,9 +11,7 @@ import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUserRepo
 import com.algaworks.algashop.authorizationserver.domain.model.user.VerificationTokenHasher;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -27,6 +26,7 @@ public class AuthUserManagementApplicationService {
     private final UserAccountProperties userAccountProperties;
     private final AuthUserPasswordManager passwordManager;
     private final VerificationTokenHasher tokenHasher;
+    private final AuthUserMailSender authUserMailSender;
 
     public AuthUserOutput create(AuthUserInput input) {
         if (!securityCheck.canRegisterUserOfType(input.getType())) {
@@ -46,8 +46,7 @@ public class AuthUserManagementApplicationService {
 
         String plainToken = user.generateVerificationToken(userAccountProperties.getToken().getActivationTtl(), tokenHasher);
 
-        //TODO send via email
-        System.out.println("PlainToken: " + plainToken);
+        authUserMailSender.sendActivationEmail(user, plainToken);
 
         return AuthUserOutput.from(authUserRepository.save(user));
     }
