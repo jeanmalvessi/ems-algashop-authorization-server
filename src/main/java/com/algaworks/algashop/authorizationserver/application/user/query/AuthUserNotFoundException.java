@@ -7,4 +7,8 @@ public class AuthUserNotFoundException extends RuntimeException{
     public AuthUserNotFoundException(UUID userId) {
         super("User not found with ID: " + userId);
     }
+
+    public AuthUserNotFoundException(String message) {
+        super(message);
+    }
 }

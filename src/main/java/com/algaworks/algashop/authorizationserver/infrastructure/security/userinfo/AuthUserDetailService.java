@@ -22,7 +22,7 @@ public class AuthUserDetailService implements UserDetailsService {
 
         return User.withUsername(email)
                 .password(authUser.getPassword())
-                .disabled(!authUser.isEnabled())
+                .disabled(authUser.isDisabled())
                 .build();
     }
 }
