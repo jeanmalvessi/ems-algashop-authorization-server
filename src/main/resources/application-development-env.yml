@@ -108,7 +108,8 @@ spring:
               scopes:
                 - products:read
                 - categories:read
-                - customers:write
+                - users:write
+                - shipping-costs:preview
             token:
               access-token-time-to-live: 15m
           algashop-admin-web-client:
