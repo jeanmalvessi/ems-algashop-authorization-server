@@ -8,6 +8,7 @@ import com.algaworks.algashop.authorizationserver.application.user.query.AuthUse
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUser;
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUserPasswordManager;
 import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUserRepository;
+import com.algaworks.algashop.authorizationserver.domain.model.user.AuthUserType;
 import com.algaworks.algashop.authorizationserver.domain.model.user.VerificationTokenHasher;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -63,8 +64,22 @@ public class AuthUserManagementApplicationService {
         return AuthUserOutput.from(authUserRepository.save(user));
     }
 
+    public AuthUserOutput update(UUID userId, MyUserUpdateInput input) {
+        AuthUser user = authUserRepository.findById(userId).orElseThrow(() -> new AuthUserNotFoundException(userId));
+
+        if (!securityCheck.canEditUser(user.getType(), user.getId())) {
+            throw new AccessDeniedException("Cannot edit user");
+        }
+
+        user.setName(input.getName());
+
+        return AuthUserOutput.from(authUserRepository.save(user));
+    }
+
     public void delete(UUID userId) {
         AuthUser user = authUserRepository.findById(userId).orElseThrow(() -> new AuthUserNotFoundException(userId));
+
+        verifyCanArchiveOwnUser(user);
 
         user.anonymize();
 
@@ -77,6 +92,12 @@ public class AuthUserManagementApplicationService {
         }
         if (!securityCheck.canChangeUserType(authUser.getType(), input.getType())) {
             throw new AccessDeniedException("Cannot change user type to " + input.getType());
+        }
+    }
+
+    private void verifyCanArchiveOwnUser(AuthUser user) {
+        if (securityCheck.getAuthenticatedUserId().equals(user.getId()) && user.getType() != AuthUserType.CUSTOMER) {
+            throw new AccessDeniedException("Only CUSTOMER users can delete their own profile");
         }
     }
 }
