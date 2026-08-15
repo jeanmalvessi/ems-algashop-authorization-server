@@ -13,6 +13,10 @@ java {
 	}
 }
 
+ext {
+	set('springCloudAwsVersion', "4.0.0")
+}
+
 repositories {
 	mavenCentral()
 }
@@ -25,6 +29,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}")
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-secrets-manager'
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-parameter-store'
 	implementation 'org.springframework.session:spring-session-jdbc'
 	implementation 'org.flywaydb:flyway-database-postgresql'
 	implementation 'org.apache.commons:commons-lang3:3.20.0'

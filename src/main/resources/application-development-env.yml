@@ -1,4 +1,9 @@
 spring:
+  cloud:
+    aws:
+      region:
+        static: us-east-1
+      endpoint: http://localstack:4566
   mail:
     host: localhost
     port: 1025
@@ -166,3 +171,15 @@ algashop:
 logging:
   level:
     org.springframework.security: TRACE
+management:
+  info:
+    env.enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: 'health,info,env'
+  endpoint:
+    health:
+      show-details: 'always'
+    env:
+      show-values: 'always'
