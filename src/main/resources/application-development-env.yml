@@ -1,6 +1,12 @@
 spring:
+  config:
+    import:
+      - aws-secretsmanager:/secret/algashop/authorization-server/database?prefix=auth.secrets.datasource.
   cloud:
     aws:
+      credentials:
+        access-key: test
+        secret-key: test
       region:
         static: us-east-1
       endpoint: http://localstack:4566
@@ -12,8 +18,8 @@ spring:
     timeout: 30m
   datasource:
     url: jdbc:postgresql://localhost:5432/authorization_server
-    username: postgres
-    password: postgres
+    username: ${auth.secrets.datasource.username}
+    password: ${auth.secrets.datasource.password}
   jpa:
     show-sql: true
   flyway:
