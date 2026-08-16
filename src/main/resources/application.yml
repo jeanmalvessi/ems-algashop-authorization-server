@@ -1,14 +1,14 @@
 spring:
   profiles:
-    active: 'development'
+    active: development
     group:
       development:
-        - 'base'
-        - 'development-env'
+        - base
+        - development-env
       docker:
-        - 'base'
-        - 'development-env'
-        - 'docker-env'
+        - base
+        - development-env
+        - docker-env
       production:
-        - 'base'
-        - 'production-env'
+        - base
+        - production-env

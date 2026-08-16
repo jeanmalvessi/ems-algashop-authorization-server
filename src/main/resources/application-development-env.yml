@@ -12,7 +12,7 @@ spring:
         secret-key: test
       region:
         static: us-east-1
-      endpoint: http://localstack:4566
+      endpoint: http://algashop-localstack:4566
   mail:
     host: ${auth.params.mail.host}
     port: ${auth.params.mail.port}

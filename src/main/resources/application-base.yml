@@ -1,24 +1,26 @@
-server:
-  port: 8081
+server.port: 8081
 spring:
   application:
-    name: 'authorization-server'
+    name: authorization-server
   jpa:
     hibernate:
-      ddl-auto: 'none'
-    show-sql: 'false'
+      ddl-auto: none
+    show-sql: false
   flyway:
-    enabled: 'false'
-    locations: 'classpath:db/migration'
+    enabled: false
+    locations: classpath:db/migration
 management:
   info:
     env.enabled: true
+  health:
+    redis:
+      enabled: false
   endpoints:
     web:
       exposure:
-        include: 'health,info'
+        include: health,info
   endpoint:
     health:
-      show-details: 'always'
+      show-details: always
 info:
-  app.name: 'AlgaShop Authorization Server'
+  app.name: AlgaShop Authorization Server
