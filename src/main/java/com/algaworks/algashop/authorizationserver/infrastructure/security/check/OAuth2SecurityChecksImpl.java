@@ -97,6 +97,11 @@ public class OAuth2SecurityChecksImpl implements SecurityChecks {
     }
 
     @Override
+    public boolean canViewUser(AuthUserType viewType, UUID viewUserId) {
+        return canEditUser(viewType, viewUserId);
+    }
+
+    @Override
     public boolean canChangeUserType(AuthUserType currentType, AuthUserType newType) {
         if (currentType.equals(newType)) {
             return true;
