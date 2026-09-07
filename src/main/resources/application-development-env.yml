@@ -101,7 +101,7 @@ spring:
                 - shopping-carts:write
                 - invoices:read
                 - openid
-            require-authorization-consent: true
+            require-authorization-consent: false
             require-proof-key: false #PKCE
             token:
               access-token-time-to-live: 5m
